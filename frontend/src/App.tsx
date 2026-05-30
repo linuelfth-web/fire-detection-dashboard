@@ -32,7 +32,7 @@ const initialState = {
 
 const sendTelegramAlert = async (message: string) => {
   const TOKEN = "8946369351:AAF0bhgnH2BvqB0bEcCZzlq2ntqUgGz1Jcc";
-  const CHAT_ID = "-5194093202"; // your group chat ID
+  const CHAT_ID = "-5194093202";
   try {
     await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
       method: "POST",
@@ -48,9 +48,44 @@ const sendTelegramAlert = async (message: string) => {
   }
 };
 
+// Simulation presets
+const SIM_KITCHEN = {
+  kitchen: {
+    dht11: { temperature: 74, humidity: 88 },
+    mq2: { ppm: 820, analogVoltage: 4.0 },
+    flame: { detected: true, irIntensity: 950 },
+  },
+  bedroom: initialState.bedroom,
+};
+
+const SIM_BEDROOM = {
+  kitchen: initialState.kitchen,
+  bedroom: {
+    dht11: { temperature: 76, humidity: 90 },
+    mq2: { ppm: 850, analogVoltage: 4.1 },
+    flame: { detected: true, irIntensity: 950 },
+  },
+};
+
+const SIM_BOTH = {
+  kitchen: {
+    dht11: { temperature: 74, humidity: 88 },
+    mq2: { ppm: 820, analogVoltage: 4.0 },
+    flame: { detected: true, irIntensity: 950 },
+  },
+  bedroom: {
+    dht11: { temperature: 76, humidity: 90 },
+    mq2: { ppm: 850, analogVoltage: 4.1 },
+    flame: { detected: true, irIntensity: 950 },
+  },
+};
+
 export default function App() {
   const [zones, setZones] = useState(initialState);
   const [connected, setConnected] = useState(false);
+  const [simMode, setSimMode] = useState<null | "kitchen" | "bedroom" | "both">(
+    null,
+  );
   const prevAlert = useRef(false);
   const alertLockTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [alertLocked, setAlertLocked] = useState(false);
@@ -61,9 +96,7 @@ export default function App() {
       (snap) => {
         const d = snap.val();
         if (!d) return;
-
         setConnected(true);
-
         const flameDetected = d.flame === 0;
         const gasRaw = d.gas ?? 0;
         const ppm = Math.round((gasRaw / 1023) * 1000);
@@ -72,7 +105,6 @@ export default function App() {
         const temperature = d.temperature ?? 0;
         const humidity = d.humidity ?? 0;
 
-        // ── Telegram alert ──
         const gasAlert = ppm >= 700;
         const tempAlert = temperature >= 40;
         const anyAlert = flameDetected || gasAlert || tempAlert;
@@ -120,11 +152,39 @@ export default function App() {
         setConnected(false);
       },
     );
-
     return () => unsub();
   }, []);
 
-  const boostedZones = alertLocked
+  const triggerSim = (mode: "kitchen" | "bedroom" | "both") => {
+    setSimMode(mode);
+    const simZone =
+      mode === "kitchen" ? "Kitchen" : mode === "bedroom" ? "Bedroom" : "Both";
+    sendTelegramAlert(
+      `🧪 <b>SIMULATION — FireGuard OS</b>\n\n` +
+        `🔥 Simulated fire in <b>${simZone}</b>\n` +
+        `🌡 Critical temperature detected\n` +
+        `💨 Dangerous gas levels\n` +
+        `🔥 Flame sensor triggered\n\n` +
+        `━━━━━━━━━━━━━━━━━━━━\n` +
+        `🗺️ <b>ESCAPE ROUTE MAP:</b>\n` +
+        `👉 <a href="https://fire-detection-dashboard-fnjr.vercel.app#alert-${simZone.replace(" ", "")}">OPEN DASHBOARD NOW</a>\n` +
+        `━━━━━━━━━━━━━━━━━━━━\n\n` +
+        `⚠️ <b>EVACUATE IMMEDIATELY!</b>\n` +
+        `🚪 Follow the highlighted escape route on the dashboard!`,
+    );
+    setTimeout(() => setSimMode(null), 15000);
+  };
+
+  const simZones =
+    simMode === "kitchen"
+      ? SIM_KITCHEN
+      : simMode === "bedroom"
+        ? SIM_BEDROOM
+        : simMode === "both"
+          ? SIM_BOTH
+          : null;
+
+  const baseZones = alertLocked
     ? {
         ...zones,
         kitchen: {
@@ -137,5 +197,17 @@ export default function App() {
       }
     : zones;
 
-  return <Dashboard zones={boostedZones} connected={connected} />;
+  const displayZones = simZones ?? baseZones;
+
+  return (
+    <Dashboard
+      zones={displayZones}
+      connected={connected}
+      simMode={simMode}
+      onSimKitchen={() => triggerSim("kitchen")}
+      onSimBedroom={() => triggerSim("bedroom")}
+      onSimBoth={() => triggerSim("both")}
+      onSimClear={() => setSimMode(null)}
+    />
+  );
 }
