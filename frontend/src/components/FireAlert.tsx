@@ -24,12 +24,12 @@ export const FireAlert = ({
   const [dismissCD, setDismissCD] = useState(10);
   const [prevAny, setPrevAny] = useState(false);
   const [fa, setFa] = useState(0);
-
   const [savedZone, setSavedZone] = useState(() => {
     const hash = window.location.hash;
     if (hash === "#alert-Kitchen") return "Kitchen";
     if (hash === "#alert-Bedroom") return "Bedroom";
     if (hash === "#alert-Temp") return "Temp";
+    if (hash === "#alert-Both") return "Both";
     return "";
   });
 
@@ -41,6 +41,7 @@ export const FireAlert = ({
   const isKFire = activeZone === "Kitchen";
   const isBFire = activeZone === "Bedroom";
   const isTemp = activeZone === "Temp";
+  const isBoth = activeZone === "Both";
   const ff = ["🔥", "🔥 ", "  🔥"];
 
   useEffect(() => {
@@ -126,13 +127,13 @@ export const FireAlert = ({
       bg: "linear-gradient(135deg,#431407,#7c2d12)",
       border: "#f97316",
       glow: "#ea580c",
-      desc: "Temperature has reached 40°C — Fire may have spread to multiple areas.",
-      action: "Kitchen and Living Room may be affected. Evacuate immediately.",
+      desc: "Temperature has reached 40°C — Fire may have spread.",
+      action: "Evacuate immediately.",
       dot: "#f97316",
       lbl: "TEMP ALERT",
     },
   };
-  const c = configs[alertType];
+  const c = configs[alertType] || configs.flame;
 
   const zoneDetails: any = {
     Kitchen: {
@@ -140,14 +141,14 @@ export const FireAlert = ({
       location: "Kitchen Area — CH-01/02/03",
       sensors: "Flame sensor triggered · IR intensity critical",
       advice: "Do NOT enter Kitchen — use Living Room to exit",
-      safeDir: "Living Room → Main Door OR Dining → Back Door",
+      safeDir: "Living Room → Dining → Back Door",
     },
     Bedroom: {
       icon: "🛏️",
       location: "Bedroom Area — CH-01/02/03",
       sensors: "Flame sensor triggered · IR intensity critical",
-      advice: "Do NOT enter Bedroom — use Living Room side to exit",
-      safeDir: "Living Room → Main Door at bottom",
+      advice: "Do NOT enter Bedroom — move to Bathroom or Living Room",
+      safeDir: "Back Door via Dining OR Bathroom Window",
     },
     Gas: {
       icon: "💨",
@@ -161,7 +162,14 @@ export const FireAlert = ({
       location: "Multiple Areas — Fire Spreading",
       sensors: "Temp above 40°C · Kitchen + Living Room affected",
       advice: "Fire may have spread — avoid Kitchen and Living Room",
-      safeDir: "Use Back Door via Dining Area OR Bedroom Window",
+      safeDir: "Use Back Door via Dining OR Bedroom Window",
+    },
+    Both: {
+      icon: "🔥",
+      location: "All Areas — Both Zones Critical",
+      sensors: "Kitchen + Bedroom sensors triggered",
+      advice: "BOTH zones burning — use center corridor or Dining only",
+      safeDir: "Back Door via Dining (ONLY safe exit)",
     },
   };
 
@@ -231,14 +239,14 @@ export const FireAlert = ({
                 FOLLOW ESCAPE ROUTE
               </div>
               <div style={{ fontSize: 11, color: "#fecaca", marginTop: 2 }}>
-                {activeZone
-                  ? isTemp
-                    ? "CRITICAL TEMP — Fire spread to Kitchen, Living Room and Hallway"
-                    : "Fire was in " +
+                {isBoth
+                  ? "BOTH ZONES CRITICAL — Avoid Kitchen and Bedroom"
+                  : activeZone
+                    ? "Fire in " +
                       activeZone +
                       " — Use route AWAY from " +
                       activeZone
-                  : "Follow the safest exit route"}
+                    : "Follow the safest exit route"}
               </div>
             </div>
           </div>
@@ -288,7 +296,7 @@ export const FireAlert = ({
           )}
 
           <div style={{ padding: "10px 14px" }}>
-            {/* Route cards — compact 3-column */}
+            {/* Route cards */}
             <div
               style={{
                 display: "grid",
@@ -297,6 +305,7 @@ export const FireAlert = ({
                 marginBottom: 10,
               }}
             >
+              {/* KITCHEN FIRE ROUTES */}
               {isKFire && (
                 <>
                   <div
@@ -377,6 +386,47 @@ export const FireAlert = ({
                           width: 8,
                           height: 8,
                           borderRadius: "50%",
+                          background: "#f472b6",
+                          flexShrink: 0,
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: "#f472b6",
+                        }}
+                      >
+                        Bedroom Win.
+                      </span>
+                    </div>
+                    <div
+                      style={{ fontSize: 8, color: "#9ca3af", lineHeight: 1.3 }}
+                    >
+                      Bedroom → Side Win.
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      background: "#0f172a",
+                      border: "1px solid #1e3a52",
+                      borderRadius: 8,
+                      padding: "7px 8px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 4,
+                        marginBottom: 2,
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: "50%",
                           background: "#fbbf24",
                           flexShrink: 0,
                         }}
@@ -397,60 +447,16 @@ export const FireAlert = ({
                       Dining → Side Win.
                     </div>
                   </div>
-                  <div
-                    style={{
-                      background: "#0f172a",
-                      border: "1px solid #1e3a52",
-                      borderRadius: 8,
-                      padding: "7px 8px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 4,
-                        marginBottom: 2,
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: 8,
-                          height: 8,
-                          borderRadius: "50%",
-                          background: "#f472b6",
-                          flexShrink: 0,
-                        }}
-                      />
-                      <span
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 700,
-                          color: "#f472b6",
-                        }}
-                      >
-                        Bedroom Win.
-                      </span>
-                    </div>
-                    <div
-                      style={{ fontSize: 8, color: "#9ca3af", lineHeight: 1.3 }}
-                    >
-                      Bedroom → Side Win.
-                    </div>
-                    <div
-                      style={{ fontSize: 7, color: "#f87171", fontWeight: 700 }}
-                    >
-                      ⚠ Near fire zone
-                    </div>
-                  </div>
                 </>
               )}
+
+              {/* BEDROOM FIRE ROUTES */}
               {isBFire && (
                 <>
                   <div
                     style={{
-                      background: "#34d39922",
-                      border: "2px solid #34d399",
+                      background: "#60a5fa22",
+                      border: "2px solid #60a5fa",
                       borderRadius: 8,
                       padding: "7px 8px",
                       position: "relative",
@@ -471,47 +477,6 @@ export const FireAlert = ({
                     >
                       ✅ SAFEST
                     </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 4,
-                        marginBottom: 2,
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: 8,
-                          height: 8,
-                          borderRadius: "50%",
-                          background: "#34d399",
-                          flexShrink: 0,
-                        }}
-                      />
-                      <span
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 700,
-                          color: "#34d399",
-                        }}
-                      >
-                        Main Door
-                      </span>
-                    </div>
-                    <div
-                      style={{ fontSize: 8, color: "#9ca3af", lineHeight: 1.3 }}
-                    >
-                      Living Room → Main
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      background: "#0f172a",
-                      border: "1px solid #1e3a52",
-                      borderRadius: 8,
-                      padding: "7px 8px",
-                    }}
-                  >
                     <div
                       style={{
                         display: "flex",
@@ -566,6 +531,47 @@ export const FireAlert = ({
                           width: 8,
                           height: 8,
                           borderRadius: "50%",
+                          background: "#4ade80",
+                          flexShrink: 0,
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: "#4ade80",
+                        }}
+                      >
+                        Bathroom Win.
+                      </span>
+                    </div>
+                    <div
+                      style={{ fontSize: 8, color: "#9ca3af", lineHeight: 1.3 }}
+                    >
+                      Bathroom → Window
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      background: "#0f172a",
+                      border: "1px solid #1e3a52",
+                      borderRadius: 8,
+                      padding: "7px 8px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 4,
+                        marginBottom: 2,
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: "50%",
                           background: "#a78bfa",
                           flexShrink: 0,
                         }}
@@ -585,9 +591,16 @@ export const FireAlert = ({
                     >
                       Kitchen → Bottom Win.
                     </div>
+                    <div
+                      style={{ fontSize: 7, color: "#f87171", fontWeight: 700 }}
+                    >
+                      ⚠ Last resort
+                    </div>
                   </div>
                 </>
               )}
+
+              {/* TEMP ROUTES */}
               {isTemp && (
                 <>
                   <div
@@ -736,7 +749,158 @@ export const FireAlert = ({
                   </div>
                 </>
               )}
-              {!activeZone && !isTemp && (
+
+              {/* BOTH ZONES ROUTES */}
+              {isBoth && (
+                <>
+                  <div
+                    style={{
+                      background: "#60a5fa22",
+                      border: "2px solid #60a5fa",
+                      borderRadius: 8,
+                      padding: "7px 8px",
+                      position: "relative",
+                    }}
+                  >
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: -1,
+                        right: -1,
+                        background: "#16a34a",
+                        color: "#fff",
+                        fontSize: 7,
+                        fontWeight: 700,
+                        padding: "1px 5px",
+                        borderRadius: "0 6px 0 4px",
+                      }}
+                    >
+                      ✅ SAFEST
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 4,
+                        marginBottom: 2,
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: "50%",
+                          background: "#60a5fa",
+                          flexShrink: 0,
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: "#60a5fa",
+                        }}
+                      >
+                        Back Door
+                      </span>
+                    </div>
+                    <div
+                      style={{ fontSize: 8, color: "#9ca3af", lineHeight: 1.3 }}
+                    >
+                      Living → Dining → Back
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      background: "#0f172a",
+                      border: "1px solid #1e3a52",
+                      borderRadius: 8,
+                      padding: "7px 8px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 4,
+                        marginBottom: 2,
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: "50%",
+                          background: "#4ade80",
+                          flexShrink: 0,
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: "#4ade80",
+                        }}
+                      >
+                        Bathroom Win.
+                      </span>
+                    </div>
+                    <div
+                      style={{ fontSize: 8, color: "#9ca3af", lineHeight: 1.3 }}
+                    >
+                      Bathroom → Window
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      background: "#0f172a",
+                      border: "1px solid #1e3a52",
+                      borderRadius: 8,
+                      padding: "7px 8px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 4,
+                        marginBottom: 2,
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: "50%",
+                          background: "#fbbf24",
+                          flexShrink: 0,
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: "#fbbf24",
+                        }}
+                      >
+                        Dining Win.
+                      </span>
+                    </div>
+                    <div
+                      style={{ fontSize: 8, color: "#9ca3af", lineHeight: 1.3 }}
+                    >
+                      Dining → Side Win.
+                    </div>
+                    <div
+                      style={{ fontSize: 7, color: "#f87171", fontWeight: 700 }}
+                    >
+                      ⚠ Avoid both zones
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {!activeZone && !isTemp && !isBoth && (
                 <div
                   style={{
                     background: "#34d39922",
@@ -797,7 +961,7 @@ export const FireAlert = ({
               )}
             </div>
 
-            {/* Floor Plan — emphasized, max size */}
+            {/* Floor Plan */}
             <div
               style={{
                 border: "2px solid " + c.border,
@@ -808,7 +972,6 @@ export const FireAlert = ({
                 marginLeft: "auto",
                 marginRight: "auto",
                 width: "100%",
-                maxWidth: "100%",
                 boxShadow: "0 0 24px " + c.glow + "66",
               }}
             >
@@ -846,7 +1009,7 @@ export const FireAlert = ({
                   fill="#080f1e"
                 />
 
-                {/* Rooms */}
+                {/* Base rooms */}
                 <rect
                   x="8"
                   y="8"
@@ -879,7 +1042,6 @@ export const FireAlert = ({
                 >
                   ROOM
                 </text>
-
                 <rect
                   x="136"
                   y="8"
@@ -912,7 +1074,6 @@ export const FireAlert = ({
                 >
                   ROOM
                 </text>
-
                 <rect
                   x="394"
                   y="8"
@@ -945,7 +1106,6 @@ export const FireAlert = ({
                 >
                   AREA
                 </text>
-
                 <rect
                   x="8"
                   y="126"
@@ -959,7 +1119,7 @@ export const FireAlert = ({
                 />
                 <text
                   x="68"
-                  y="178"
+                  y="165"
                   textAnchor="middle"
                   fill={isKFire ? "#f87171" : "#84cc16"}
                   fontSize="10"
@@ -970,7 +1130,7 @@ export const FireAlert = ({
                 </text>
                 <text
                   x="68"
-                  y="191"
+                  y="178"
                   textAnchor="middle"
                   fill={isKFire ? "#f87171" : "#84cc16"}
                   fontSize="10"
@@ -980,19 +1140,19 @@ export const FireAlert = ({
                   AREA
                 </text>
                 {isKFire && (
-                  <text x="40" y="218" fontSize="16" textAnchor="middle">
+                  <text x="40" y="210" fontSize="16" textAnchor="middle">
                     {ff[fa]}
                   </text>
                 )}
                 {isKFire && (
-                  <text x="96" y="218" fontSize="16" textAnchor="middle">
+                  <text x="96" y="210" fontSize="16" textAnchor="middle">
                     {ff[(fa + 1) % 3]}
                   </text>
                 )}
                 {isKFire && (
                   <text
                     x="68"
-                    y="236"
+                    y="230"
                     textAnchor="middle"
                     fill="#f87171"
                     fontSize="8"
@@ -1005,7 +1165,7 @@ export const FireAlert = ({
                 {isKFire && (
                   <ellipse
                     cx="52"
-                    cy="204"
+                    cy="196"
                     rx="4"
                     ry="7"
                     fill="#94a3b8"
@@ -1016,7 +1176,7 @@ export const FireAlert = ({
                 {isKFire && (
                   <ellipse
                     cx="84"
-                    cy="200"
+                    cy="192"
                     rx="3"
                     ry="6"
                     fill="#94a3b8"
@@ -1024,7 +1184,6 @@ export const FireAlert = ({
                     className="fm-smoke"
                   />
                 )}
-
                 <rect
                   x="394"
                   y="170"
@@ -1038,7 +1197,7 @@ export const FireAlert = ({
                 />
                 <text
                   x="473"
-                  y="248"
+                  y="240"
                   textAnchor="middle"
                   fill={isBFire ? "#f87171" : "#c084fc"}
                   fontSize="10"
@@ -1048,19 +1207,19 @@ export const FireAlert = ({
                   BEDROOM
                 </text>
                 {isBFire && (
-                  <text x="448" y="272" fontSize="16" textAnchor="middle">
+                  <text x="448" y="264" fontSize="16" textAnchor="middle">
                     {ff[fa]}
                   </text>
                 )}
                 {isBFire && (
-                  <text x="498" y="272" fontSize="16" textAnchor="middle">
+                  <text x="498" y="264" fontSize="16" textAnchor="middle">
                     {ff[(fa + 1) % 3]}
                   </text>
                 )}
                 {isBFire && (
                   <text
                     x="473"
-                    y="290"
+                    y="282"
                     textAnchor="middle"
                     fill="#f87171"
                     fontSize="8"
@@ -1073,7 +1232,7 @@ export const FireAlert = ({
                 {isBFire && (
                   <ellipse
                     cx="458"
-                    cy="258"
+                    cy="250"
                     rx="4"
                     ry="7"
                     fill="#94a3b8"
@@ -1084,7 +1243,7 @@ export const FireAlert = ({
                 {isBFire && (
                   <ellipse
                     cx="488"
-                    cy="254"
+                    cy="246"
                     rx="3"
                     ry="6"
                     fill="#94a3b8"
@@ -1092,7 +1251,6 @@ export const FireAlert = ({
                     className="fm-smoke"
                   />
                 )}
-
                 <rect
                   x="136"
                   y="246"
@@ -1228,8 +1386,30 @@ export const FireAlert = ({
                 >
                   WIN
                 </text>
-
-                {/* Interior doors */}
+                {/* Bathroom window */}
+                <rect
+                  x="2"
+                  y="30"
+                  width="10"
+                  height="50"
+                  rx="5"
+                  fill="#4ade80"
+                  stroke="#16a34a"
+                  strokeWidth="1.5"
+                />
+                <text
+                  x="7"
+                  y="55"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill="#022c22"
+                  fontSize="6"
+                  fontFamily="system-ui"
+                  fontWeight="700"
+                  transform="rotate(-90,7,55)"
+                >
+                  WIN
+                </text>
                 <rect
                   x="128"
                   y="42"
@@ -1275,10 +1455,10 @@ export const FireAlert = ({
                     >
                       🔥 FIRE ZONE
                     </text>
-                    <text x="40" y="208" fontSize="14" textAnchor="middle">
+                    <text x="40" y="200" fontSize="14" textAnchor="middle">
                       {ff[fa]}
                     </text>
-                    <text x="96" y="208" fontSize="14" textAnchor="middle">
+                    <text x="96" y="200" fontSize="14" textAnchor="middle">
                       {ff[(fa + 1) % 3]}
                     </text>
                     <ellipse
@@ -1320,10 +1500,10 @@ export const FireAlert = ({
                     >
                       ⚠ FIRE SPREADING
                     </text>
-                    <text x="220" y="170" fontSize="16" textAnchor="middle">
+                    <text x="220" y="160" fontSize="16" textAnchor="middle">
                       {ff[fa]}
                     </text>
-                    <text x="310" y="190" fontSize="14" textAnchor="middle">
+                    <text x="310" y="180" fontSize="14" textAnchor="middle">
                       {ff[(fa + 1) % 3]}
                     </text>
                     <ellipse
@@ -1421,7 +1601,7 @@ export const FireAlert = ({
                     />
                     <text
                       x="473"
-                      y="255"
+                      y="248"
                       textAnchor="middle"
                       fill="#4ade80"
                       fontSize="8"
@@ -1461,14 +1641,14 @@ export const FireAlert = ({
                     </text>
                     <circle
                       cx="473"
-                      cy="220"
+                      cy="218"
                       r="4"
                       fill="#f472b6"
                       opacity="0.4"
                     />
-                    <circle cx="473" cy="220" r="2.5" fill="#f472b6" />
+                    <circle cx="473" cy="218" r="2.5" fill="#f472b6" />
                     <polyline
-                      points="473,220 548,220"
+                      points="473,218 548,218"
                       fill="none"
                       stroke="#f472b6"
                       strokeWidth="3"
@@ -1478,13 +1658,13 @@ export const FireAlert = ({
                       className="fm-dash"
                     />
                     <polygon
-                      points="545,214 555,220 545,226"
+                      points="545,212 555,218 545,224"
                       fill="#f472b6"
                       opacity="0.9"
                     />
                     <text
                       x="473"
-                      y="212"
+                      y="210"
                       textAnchor="middle"
                       fill="#f472b6"
                       fontSize="7"
@@ -1495,14 +1675,14 @@ export const FireAlert = ({
                     </text>
                     <circle
                       cx="370"
-                      cy="270"
+                      cy="268"
                       r="4"
                       fill="#fbbf24"
                       opacity="0.4"
                     />
-                    <circle cx="370" cy="270" r="2.5" fill="#fbbf24" />
+                    <circle cx="370" cy="268" r="2.5" fill="#fbbf24" />
                     <polyline
-                      points="370,270 394,270 394,240 548,240"
+                      points="370,268 394,268 394,238 548,238"
                       fill="none"
                       stroke="#fbbf24"
                       strokeWidth="2.5"
@@ -1512,13 +1692,13 @@ export const FireAlert = ({
                       className="fm-dash"
                     />
                     <polygon
-                      points="545,234 555,240 545,246"
+                      points="545,232 555,238 545,244"
                       fill="#fbbf24"
                       opacity="0.85"
                     />
                     <text
                       x="430"
-                      y="263"
+                      y="261"
                       textAnchor="middle"
                       fill="#fbbf24"
                       fontSize="7"
@@ -1609,10 +1789,10 @@ export const FireAlert = ({
                   </g>
                 )}
 
-                {/* Kitchen fire routes */}
+                {/* KITCHEN FIRE ROUTES */}
                 {isKFire && !isTemp && (
                   <g>
-                    {/* Route 1 SAFEST - Back Door - blue - through Bathroom door → Living Room → Dining → Back Door */}
+                    {/* Route 1 - Back Door - blue - through bathroom door top */}
                     <circle
                       cx="142"
                       cy="55"
@@ -1645,85 +1825,78 @@ export const FireAlert = ({
                       y="48"
                       textAnchor="middle"
                       fill="#60a5fa"
-                      fontSize="8"
+                      fontSize="9"
                       fontFamily="system-ui"
                       fontWeight="900"
                     >
                       1 Back Door (SAFEST)
                     </text>
-
-                    {/* Route 2 - Bedroom Window - amber - Living Room → right side → Bedroom Window */}
+                    {/* Route 2 - Bedroom Window - pink */}
                     <circle
                       cx="390"
-                      cy="180"
+                      cy="218"
                       r="4"
-                      fill="#fbbf24"
+                      fill="#f472b6"
                       opacity="0.6"
                     />
-                    <circle cx="390" cy="180" r="2.5" fill="#fbbf24" />
+                    <circle cx="390" cy="218" r="2.5" fill="#f472b6" />
                     <polyline
-                      points="390,180 394,180 394,218 548,218"
+                      points="390,218 394,218 548,218"
                       fill="none"
-                      stroke="#fbbf24"
+                      stroke="#f472b6"
                       strokeWidth="3"
                       strokeDasharray="7,4"
                       strokeLinecap="round"
                       opacity="0.9"
                       className="fm-dash"
                     />
-                    <polygon points="546,212 558,218 546,224" fill="#fbbf24" />
+                    <polygon points="546,212 558,218 546,224" fill="#f472b6" />
                     <text
                       x="460"
-                      y="174"
+                      y="210"
                       textAnchor="middle"
-                      fill="#fbbf24"
+                      fill="#f472b6"
                       fontSize="8"
                       fontFamily="system-ui"
                       fontWeight="700"
                     >
                       2 Bed.Win.
                     </text>
-
-                    {/* Route 3 - Main Door - green - Living Room straight down → Hallway → Main Door */}
+                    {/* Route 3 - Dining Window - amber */}
                     <circle
-                      cx="260"
-                      cy="30"
+                      cx="464"
+                      cy="80"
                       r="4"
-                      fill="#34d399"
-                      opacity="0.6"
+                      fill="#fbbf24"
+                      opacity="0.5"
                     />
-                    <circle cx="260" cy="30" r="2.5" fill="#34d399" />
+                    <circle cx="464" cy="80" r="2.5" fill="#fbbf24" />
                     <polyline
-                      points="260,30 260,246 260,328"
+                      points="392,80 548,80"
                       fill="none"
-                      stroke="#34d399"
-                      strokeWidth="3"
+                      stroke="#fbbf24"
+                      strokeWidth="2.5"
                       strokeDasharray="7,4"
                       strokeLinecap="round"
                       opacity="0.85"
                       className="fm-dash"
                     />
-                    <polygon points="252,326 260,338 268,326" fill="#34d399" />
-                    <circle
-                      cx="260"
-                      cy="334"
-                      r="5"
-                      fill="#34d399"
-                      opacity="0.3"
-                      stroke="#34d399"
-                      strokeWidth="2"
+                    <polygon
+                      points="546,74 558,80 546,86"
+                      fill="#fbbf24"
+                      opacity="0.85"
                     />
                     <text
-                      x="276"
-                      y="180"
-                      fill="#34d399"
-                      fontSize="8"
+                      x="460"
+                      y="72"
+                      textAnchor="middle"
+                      fill="#fbbf24"
+                      fontSize="7"
                       fontFamily="system-ui"
                       fontWeight="700"
                     >
-                      3 Living→Main
+                      3 Dining Win.
                     </text>
-
                     {/* Legend */}
                     <rect
                       x="8"
@@ -1766,13 +1939,13 @@ export const FireAlert = ({
                       y1="293"
                       x2="22"
                       y2="293"
-                      stroke="#fbbf24"
+                      stroke="#f472b6"
                       strokeWidth="2"
                     />
                     <text
                       x="26"
                       y="297"
-                      fill="#fbbf24"
+                      fill="#f472b6"
                       fontSize="7"
                       fontFamily="system-ui"
                     >
@@ -1792,104 +1965,109 @@ export const FireAlert = ({
                       y1="305"
                       x2="22"
                       y2="305"
-                      stroke="#34d399"
+                      stroke="#fbbf24"
                       strokeWidth="2"
                     />
                     <text
                       x="26"
                       y="309"
-                      fill="#34d399"
+                      fill="#fbbf24"
                       fontSize="7"
                       fontFamily="system-ui"
                     >
-                      3 Living→Main Door
+                      3 Dining Window
                     </text>
                   </g>
                 )}
 
-                {/* Bedroom fire routes */}
+                {/* BEDROOM FIRE ROUTES */}
                 {isBFire && !isTemp && (
                   <g>
+                    {/* Route 1 - Back Door - blue - SAFEST away from bedroom */}
                     <circle
-                      cx="261"
-                      cy="265"
+                      cx="392"
+                      cy="55"
                       r="5"
-                      fill="#34d399"
-                      opacity="0.4"
+                      fill="#60a5fa"
+                      opacity="0.6"
                     />
-                    <circle cx="261" cy="265" r="3" fill="#34d399" />
+                    <circle cx="392" cy="55" r="3" fill="#60a5fa" />
                     <polyline
-                      points="261,265 261,328"
+                      points="392,55 464,55 464,12"
                       fill="none"
-                      stroke="#34d399"
-                      strokeWidth="3.5"
+                      stroke="#60a5fa"
+                      strokeWidth="4"
                       strokeDasharray="8,4"
                       strokeLinecap="round"
                       className="fm-dash"
                     />
-                    <polygon points="253,326 261,338 269,326" fill="#34d399" />
+                    <polygon points="457,14 464,4 471,14" fill="#60a5fa" />
                     <circle
-                      cx="261"
-                      cy="334"
+                      cx="464"
+                      cy="5"
                       r="6"
-                      fill="#34d399"
-                      opacity="0.25"
-                      stroke="#34d399"
-                      strokeWidth="1.5"
+                      fill="#60a5fa"
+                      opacity="0.4"
+                      stroke="#60a5fa"
+                      strokeWidth="2"
                     />
                     <text
-                      x="278"
-                      y="285"
-                      fill="#34d399"
+                      x="420"
+                      y="48"
+                      textAnchor="middle"
+                      fill="#60a5fa"
+                      fontSize="9"
+                      fontFamily="system-ui"
+                      fontWeight="900"
+                    >
+                      1 Back Door (SAFEST)
+                    </text>
+                    {/* Route 2 - Bathroom Window - green - top left far from bedroom */}
+                    <circle
+                      cx="136"
+                      cy="65"
+                      r="4"
+                      fill="#4ade80"
+                      opacity="0.6"
+                    />
+                    <circle cx="136" cy="65" r="2.5" fill="#4ade80" />
+                    <polyline
+                      points="136,65 68,65 12,65"
+                      fill="none"
+                      stroke="#4ade80"
+                      strokeWidth="3"
+                      strokeDasharray="7,4"
+                      strokeLinecap="round"
+                      opacity="0.9"
+                      className="fm-dash"
+                    />
+                    <polygon
+                      points="14,58 2,65 14,72"
+                      fill="#4ade80"
+                      opacity="0.9"
+                    />
+                    <text
+                      x="80"
+                      y="57"
+                      textAnchor="middle"
+                      fill="#4ade80"
                       fontSize="8"
                       fontFamily="system-ui"
                       fontWeight="700"
                     >
-                      1 Main Door (SAFEST)
+                      2 Bathroom Win.
                     </text>
+                    {/* Route 3 - Kitchen Window - purple - bottom left last resort */}
                     <circle
-                      cx="464"
-                      cy="100"
-                      r="4"
-                      fill="#60a5fa"
-                      opacity="0.35"
-                    />
-                    <circle cx="464" cy="100" r="2.5" fill="#60a5fa" />
-                    <polyline
-                      points="464,100 464,12"
-                      fill="none"
-                      stroke="#60a5fa"
-                      strokeWidth="2.5"
-                      strokeDasharray="7,4"
-                      strokeLinecap="round"
-                      opacity="0.85"
-                      className="fm-dash"
-                    />
-                    <polygon
-                      points="457,14 464,4 471,14"
-                      fill="#60a5fa"
-                      opacity="0.85"
-                    />
-                    <text
-                      x="420"
-                      y="60"
-                      fill="#60a5fa"
-                      fontSize="7"
-                      fontFamily="system-ui"
-                      opacity="0.9"
-                    >
-                      2 Dining→Back
-                    </text>
-                    <circle
-                      cx="68"
-                      cy="180"
+                      cx="136"
+                      cy="200"
                       r="4"
                       fill="#a78bfa"
-                      opacity="0.35"
+                      opacity="0.5"
                     />
-                    <circle cx="68" cy="180" r="2.5" fill="#a78bfa" />
+                    <circle cx="136" cy="200" r="2.5" fill="#a78bfa" />
                     <polyline
-                      points="68,180 68,262"
+                      points="136,200 68,200 68,262"
                       fill="none"
                       stroke="#a78bfa"
                       strokeWidth="2.5"
@@ -1904,93 +2082,426 @@ export const FireAlert = ({
                       opacity="0.8"
                     />
                     <text
-                      x="82"
-                      y="200"
+                      x="90"
+                      y="218"
                       fill="#a78bfa"
                       fontSize="7"
                       fontFamily="system-ui"
-                      opacity="0.9"
                     >
                       3 Kitchen→Win.
                     </text>
+                    {/* Legend */}
                     <rect
                       x="8"
-                      y="278"
-                      width="120"
-                      height="9"
+                      y="276"
+                      width="128"
+                      height="10"
                       rx="3"
                       fill="#080f1e"
-                      opacity="0.9"
+                      opacity="0.95"
                     />
                     <line
                       x1="12"
-                      y1="282"
-                      x2="20"
-                      y2="282"
-                      stroke="#34d399"
+                      y1="281"
+                      x2="22"
+                      y2="281"
+                      stroke="#60a5fa"
                       strokeWidth="2.5"
                     />
                     <text
-                      x="24"
-                      y="286"
-                      fill="#34d399"
+                      x="26"
+                      y="285"
+                      fill="#60a5fa"
                       fontSize="7"
                       fontFamily="system-ui"
                       fontWeight="700"
                     >
-                      1 Main Door (SAFEST)
+                      1 Back Door (SAFEST)
                     </text>
                     <rect
                       x="8"
-                      y="289"
-                      width="120"
-                      height="9"
+                      y="288"
+                      width="128"
+                      height="10"
                       rx="3"
                       fill="#080f1e"
-                      opacity="0.9"
+                      opacity="0.95"
                     />
                     <line
                       x1="12"
                       y1="293"
-                      x2="20"
+                      x2="22"
                       y2="293"
-                      stroke="#60a5fa"
+                      stroke="#4ade80"
                       strokeWidth="2"
                     />
                     <text
-                      x="24"
+                      x="26"
                       y="297"
-                      fill="#60a5fa"
+                      fill="#4ade80"
                       fontSize="7"
                       fontFamily="system-ui"
                     >
-                      2 Dining→Back Door
+                      2 Bathroom Window
                     </text>
                     <rect
                       x="8"
                       y="300"
-                      width="120"
-                      height="9"
+                      width="128"
+                      height="10"
                       rx="3"
                       fill="#080f1e"
-                      opacity="0.9"
+                      opacity="0.95"
                     />
                     <line
                       x1="12"
-                      y1="304"
-                      x2="20"
-                      y2="304"
+                      y1="305"
+                      x2="22"
+                      y2="305"
                       stroke="#a78bfa"
                       strokeWidth="2"
                     />
                     <text
-                      x="24"
-                      y="308"
+                      x="26"
+                      y="309"
                       fill="#a78bfa"
                       fontSize="7"
                       fontFamily="system-ui"
                     >
-                      3 Kitchen→Window
+                      3 Kitchen Window
+                    </text>
+                  </g>
+                )}
+
+                {/* BOTH ZONES FIRE ROUTES */}
+                {isBoth && (
+                  <g>
+                    {/* Both zones fire overlay */}
+                    <rect
+                      x="8"
+                      y="126"
+                      width="120"
+                      height="130"
+                      rx="5"
+                      fill="#7f1d1d"
+                      stroke="#ef4444"
+                      strokeWidth="3"
+                      className="fm-fire"
+                    />
+                    <text
+                      x="68"
+                      y="162"
+                      textAnchor="middle"
+                      fill="#fca5a5"
+                      fontSize="9"
+                      fontFamily="system-ui"
+                      fontWeight="700"
+                    >
+                      🔥 FIRE
+                    </text>
+                    <text x="40" y="200" fontSize="14" textAnchor="middle">
+                      {ff[fa]}
+                    </text>
+                    <text x="96" y="200" fontSize="14" textAnchor="middle">
+                      {ff[(fa + 1) % 3]}
+                    </text>
+                    <ellipse
+                      cx="40"
+                      cy="148"
+                      rx="5"
+                      ry="9"
+                      fill="#94a3b8"
+                      opacity="0.3"
+                      className="fm-smoke"
+                    />
+                    <ellipse
+                      cx="96"
+                      cy="143"
+                      rx="4"
+                      ry="7"
+                      fill="#94a3b8"
+                      opacity="0.2"
+                      className="fm-smoke"
+                    />
+                    <rect
+                      x="394"
+                      y="170"
+                      width="158"
+                      height="162"
+                      rx="5"
+                      fill="#7f1d1d"
+                      stroke="#ef4444"
+                      strokeWidth="3"
+                      className="fm-fire"
+                    />
+                    <text
+                      x="473"
+                      y="220"
+                      textAnchor="middle"
+                      fill="#fca5a5"
+                      fontSize="9"
+                      fontFamily="system-ui"
+                      fontWeight="700"
+                    >
+                      🔥 FIRE
+                    </text>
+                    <text x="448" y="248" fontSize="14" textAnchor="middle">
+                      {ff[fa]}
+                    </text>
+                    <text x="498" y="248" fontSize="14" textAnchor="middle">
+                      {ff[(fa + 1) % 3]}
+                    </text>
+                    <ellipse
+                      cx="458"
+                      cy="190"
+                      rx="5"
+                      ry="9"
+                      fill="#94a3b8"
+                      opacity="0.3"
+                      className="fm-smoke"
+                    />
+                    <ellipse
+                      cx="488"
+                      cy="186"
+                      rx="4"
+                      ry="7"
+                      fill="#94a3b8"
+                      opacity="0.2"
+                      className="fm-smoke"
+                    />
+                    {/* Safe zones */}
+                    <rect
+                      x="8"
+                      y="8"
+                      width="120"
+                      height="110"
+                      rx="5"
+                      fill="none"
+                      stroke="#22c55e"
+                      strokeWidth="2"
+                      opacity="0.7"
+                    />
+                    <text
+                      x="68"
+                      y="100"
+                      textAnchor="middle"
+                      fill="#4ade80"
+                      fontSize="8"
+                      fontFamily="system-ui"
+                      fontWeight="700"
+                    >
+                      ✓ SAFE
+                    </text>
+                    <rect
+                      x="394"
+                      y="8"
+                      width="158"
+                      height="155"
+                      rx="5"
+                      fill="none"
+                      stroke="#22c55e"
+                      strokeWidth="2"
+                      opacity="0.7"
+                    />
+                    <text
+                      x="473"
+                      y="120"
+                      textAnchor="middle"
+                      fill="#4ade80"
+                      fontSize="8"
+                      fontFamily="system-ui"
+                      fontWeight="700"
+                    >
+                      ✓ SAFE
+                    </text>
+                    {/* Route 1 SAFEST - Back Door via Dining */}
+                    <circle
+                      cx="392"
+                      cy="80"
+                      r="5"
+                      fill="#60a5fa"
+                      opacity="0.6"
+                    />
+                    <circle cx="392" cy="80" r="3" fill="#60a5fa" />
+                    <polyline
+                      points="392,80 464,80 464,12"
+                      fill="none"
+                      stroke="#60a5fa"
+                      strokeWidth="4"
+                      strokeDasharray="8,4"
+                      strokeLinecap="round"
+                      className="fm-dash"
+                    />
+                    <polygon points="457,14 464,4 471,14" fill="#60a5fa" />
+                    <circle
+                      cx="464"
+                      cy="5"
+                      r="6"
+                      fill="#60a5fa"
+                      opacity="0.4"
+                      stroke="#60a5fa"
+                      strokeWidth="2"
+                    />
+                    <text
+                      x="420"
+                      y="72"
+                      textAnchor="middle"
+                      fill="#60a5fa"
+                      fontSize="9"
+                      fontFamily="system-ui"
+                      fontWeight="900"
+                    >
+                      1 Back Door (SAFEST)
+                    </text>
+                    {/* Route 2 - Bathroom Window */}
+                    <circle
+                      cx="136"
+                      cy="65"
+                      r="4"
+                      fill="#4ade80"
+                      opacity="0.6"
+                    />
+                    <circle cx="136" cy="65" r="2.5" fill="#4ade80" />
+                    <polyline
+                      points="136,65 68,65 12,65"
+                      fill="none"
+                      stroke="#4ade80"
+                      strokeWidth="3"
+                      strokeDasharray="7,4"
+                      strokeLinecap="round"
+                      opacity="0.9"
+                      className="fm-dash"
+                    />
+                    <polygon
+                      points="14,58 2,65 14,72"
+                      fill="#4ade80"
+                      opacity="0.9"
+                    />
+                    <text
+                      x="80"
+                      y="57"
+                      textAnchor="middle"
+                      fill="#4ade80"
+                      fontSize="8"
+                      fontFamily="system-ui"
+                      fontWeight="700"
+                    >
+                      2 Bathroom Win.
+                    </text>
+                    {/* Route 3 - Dining Window */}
+                    <circle
+                      cx="548"
+                      cy="55"
+                      r="4"
+                      fill="#fbbf24"
+                      opacity="0.5"
+                    />
+                    <circle cx="548" cy="55" r="2.5" fill="#fbbf24" />
+                    <polyline
+                      points="464,55 548,55"
+                      fill="none"
+                      stroke="#fbbf24"
+                      strokeWidth="2.5"
+                      strokeDasharray="7,4"
+                      strokeLinecap="round"
+                      opacity="0.85"
+                      className="fm-dash"
+                    />
+                    <polygon
+                      points="546,48 558,55 546,62"
+                      fill="#fbbf24"
+                      opacity="0.85"
+                    />
+                    <text
+                      x="490"
+                      y="47"
+                      textAnchor="middle"
+                      fill="#fbbf24"
+                      fontSize="7"
+                      fontFamily="system-ui"
+                      fontWeight="700"
+                    >
+                      3 Dining Win.
+                    </text>
+                    {/* Legend */}
+                    <rect
+                      x="8"
+                      y="276"
+                      width="128"
+                      height="10"
+                      rx="3"
+                      fill="#080f1e"
+                      opacity="0.95"
+                    />
+                    <line
+                      x1="12"
+                      y1="281"
+                      x2="22"
+                      y2="281"
+                      stroke="#60a5fa"
+                      strokeWidth="2.5"
+                    />
+                    <text
+                      x="26"
+                      y="285"
+                      fill="#60a5fa"
+                      fontSize="7"
+                      fontFamily="system-ui"
+                      fontWeight="700"
+                    >
+                      1 Back Door (SAFEST)
+                    </text>
+                    <rect
+                      x="8"
+                      y="288"
+                      width="128"
+                      height="10"
+                      rx="3"
+                      fill="#080f1e"
+                      opacity="0.95"
+                    />
+                    <line
+                      x1="12"
+                      y1="293"
+                      x2="22"
+                      y2="293"
+                      stroke="#4ade80"
+                      strokeWidth="2"
+                    />
+                    <text
+                      x="26"
+                      y="297"
+                      fill="#4ade80"
+                      fontSize="7"
+                      fontFamily="system-ui"
+                    >
+                      2 Bathroom Window
+                    </text>
+                    <rect
+                      x="8"
+                      y="300"
+                      width="128"
+                      height="10"
+                      rx="3"
+                      fill="#080f1e"
+                      opacity="0.95"
+                    />
+                    <line
+                      x1="12"
+                      y1="305"
+                      x2="22"
+                      y2="305"
+                      stroke="#fbbf24"
+                      strokeWidth="2"
+                    />
+                    <text
+                      x="26"
+                      y="309"
+                      fill="#fbbf24"
+                      fontSize="7"
+                      fontFamily="system-ui"
+                    >
+                      3 Dining Window
                     </text>
                   </g>
                 )}
@@ -2027,7 +2538,6 @@ export const FireAlert = ({
                     />
                   </g>
                 )}
-
                 <text
                   x="280"
                   y="335"
@@ -2081,7 +2591,7 @@ export const FireAlert = ({
     );
   }
 
-  // ── ALARM PHASE ──
+  // ALARM PHASE
   return (
     <div
       style={{

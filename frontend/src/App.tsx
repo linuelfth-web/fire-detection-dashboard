@@ -159,6 +159,7 @@ export default function App() {
     setSimMode(mode);
     const simZone =
       mode === "kitchen" ? "Kitchen" : mode === "bedroom" ? "Bedroom" : "Both";
+    window.location.hash = "#alert-" + simZone;
     sendTelegramAlert(
       `🧪 <b>SIMULATION — FireGuard OS</b>\n\n` +
         `🔥 Simulated fire in <b>${simZone}</b>\n` +
