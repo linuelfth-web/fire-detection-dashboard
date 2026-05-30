@@ -1599,20 +1599,20 @@ export const FireAlert = ({
                 {/* Kitchen fire routes */}
                 {isKFire && !isTemp && (
                   <g>
-                    {/* Route 1 SAFEST - Back Door - blue - goes ABOVE living room */}
+                    {/* Route 1 SAFEST - Back Door - blue - through Bathroom door → Living Room → Dining → Back Door */}
                     <circle
-                      cx="68"
-                      cy="20"
+                      cx="142"
+                      cy="55"
                       r="5"
                       fill="#60a5fa"
-                      opacity="0.4"
+                      opacity="0.6"
                     />
-                    <circle cx="68" cy="20" r="3" fill="#60a5fa" />
+                    <circle cx="142" cy="55" r="3" fill="#60a5fa" />
                     <polyline
-                      points="68,20 464,20 464,12"
+                      points="142,55 392,55 464,55 464,12"
                       fill="none"
                       stroke="#60a5fa"
-                      strokeWidth="3.5"
+                      strokeWidth="4"
                       strokeDasharray="8,4"
                       strokeLinecap="round"
                       className="fm-dash"
@@ -1623,129 +1623,115 @@ export const FireAlert = ({
                       cy="5"
                       r="6"
                       fill="#60a5fa"
-                      opacity="0.25"
+                      opacity="0.4"
                       stroke="#60a5fa"
-                      strokeWidth="1.5"
+                      strokeWidth="2"
                     />
                     <text
-                      x="260"
-                      y="16"
+                      x="300"
+                      y="48"
                       textAnchor="middle"
                       fill="#60a5fa"
                       fontSize="8"
                       fontFamily="system-ui"
-                      fontWeight="700"
+                      fontWeight="900"
                     >
                       1 Back Door (SAFEST)
                     </text>
-                    {/* Route 2 - Bedroom Window - amber - goes right side */}
-                    <circle
-                      cx="553"
-                      cy="100"
-                      r="4"
-                      fill="#fbbf24"
-                      opacity="0.35"
-                    />
-                    <circle cx="553" cy="100" r="2.5" fill="#fbbf24" />
-                    <polyline
-                      points="553,100 553,188"
-                      fill="none"
-                      stroke="#fbbf24"
-                      strokeWidth="2.5"
-                      strokeDasharray="7,4"
-                      strokeLinecap="round"
-                      opacity="0.85"
-                      className="fm-dash"
-                    />
-                    <polygon
-                      points="547,186 553,198 559,186"
-                      fill="#fbbf24"
-                      opacity="0.85"
-                    />
-                    <text
-                      x="535"
-                      y="148"
-                      fill="#fbbf24"
-                      fontSize="7"
-                      fontFamily="system-ui"
-                      fontWeight="700"
-                    >
-                      2 Bed.
-                    </text>
-                    <text
-                      x="535"
-                      y="158"
-                      fill="#fbbf24"
-                      fontSize="7"
-                      fontFamily="system-ui"
-                      fontWeight="700"
-                    >
-                      Win.
-                    </text>
-                    {/* Route 3 - Main Door - green - full Living Room to Main Door */}
+
+                    {/* Route 2 - Dining Window - amber - from Living Room → Dining → right window */}
                     <circle
                       cx="310"
+                      cy="80"
+                      r="4"
+                      fill="#fbbf24"
+                      opacity="0.6"
+                    />
+                    <circle cx="310" cy="80" r="2.5" fill="#fbbf24" />
+                    <polyline
+                      points="310,80 392,80 548,80"
+                      fill="none"
+                      stroke="#fbbf24"
+                      strokeWidth="3"
+                      strokeDasharray="7,4"
+                      strokeLinecap="round"
+                      opacity="0.9"
+                      className="fm-dash"
+                    />
+                    <polygon points="546,74 558,80 546,86" fill="#fbbf24" />
+                    <text
+                      x="430"
+                      y="74"
+                      textAnchor="middle"
+                      fill="#fbbf24"
+                      fontSize="8"
+                      fontFamily="system-ui"
+                      fontWeight="700"
+                    >
+                      2 Dining Win.
+                    </text>
+
+                    {/* Route 3 - Main Door - green - Living Room straight down → Hallway → Main Door */}
+                    <circle
+                      cx="260"
                       cy="30"
                       r="4"
                       fill="#34d399"
-                      opacity="0.35"
+                      opacity="0.6"
                     />
-                    <circle cx="310" cy="30" r="2.5" fill="#34d399" />
+                    <circle cx="260" cy="30" r="2.5" fill="#34d399" />
                     <polyline
-                      points="310,30 310,328"
+                      points="260,30 260,246 260,328"
                       fill="none"
                       stroke="#34d399"
-                      strokeWidth="2.5"
+                      strokeWidth="3"
                       strokeDasharray="7,4"
                       strokeLinecap="round"
-                      opacity="0.8"
+                      opacity="0.85"
                       className="fm-dash"
                     />
-                    <polygon
-                      points="302,326 310,338 318,326"
-                      fill="#34d399"
-                      opacity="0.8"
-                    />
+                    <polygon points="252,326 260,338 268,326" fill="#34d399" />
                     <circle
-                      cx="310"
+                      cx="260"
                       cy="334"
                       r="5"
                       fill="#34d399"
-                      opacity="0.2"
+                      opacity="0.3"
                       stroke="#34d399"
-                      strokeWidth="1.5"
+                      strokeWidth="2"
                     />
                     <text
-                      x="326"
+                      x="276"
                       y="180"
                       fill="#34d399"
-                      fontSize="7"
+                      fontSize="8"
                       fontFamily="system-ui"
-                      opacity="0.9"
+                      fontWeight="700"
                     >
                       3 Living→Main
                     </text>
+
                     {/* Legend */}
                     <rect
                       x="8"
-                      y="278"
-                      width="120"
-                      height="9"
+                      y="276"
+                      width="128"
+                      height="10"
                       rx="3"
                       fill="#080f1e"
-                      opacity="0.9"
+                      opacity="0.95"
                     />
                     <line
                       x1="12"
-                      y1="282"
-                      x2="20"
-                      y2="282"
+                      y1="281"
+                      x2="22"
+                      y2="281"
                       stroke="#60a5fa"
                       strokeWidth="2.5"
                     />
                     <text
-                      x="24"
-                      y="286"
+                      x="26"
+                      y="285"
                       fill="#60a5fa"
                       fontSize="7"
                       fontFamily="system-ui"
@@ -1755,50 +1741,50 @@ export const FireAlert = ({
                     </text>
                     <rect
                       x="8"
-                      y="289"
-                      width="120"
-                      height="9"
+                      y="288"
+                      width="128"
+                      height="10"
                       rx="3"
                       fill="#080f1e"
-                      opacity="0.9"
+                      opacity="0.95"
                     />
                     <line
                       x1="12"
                       y1="293"
-                      x2="20"
+                      x2="22"
                       y2="293"
                       stroke="#fbbf24"
                       strokeWidth="2"
                     />
                     <text
-                      x="24"
+                      x="26"
                       y="297"
                       fill="#fbbf24"
                       fontSize="7"
                       fontFamily="system-ui"
                     >
-                      2 Bedroom Window
+                      2 Dining Window
                     </text>
                     <rect
                       x="8"
                       y="300"
-                      width="120"
-                      height="9"
+                      width="128"
+                      height="10"
                       rx="3"
                       fill="#080f1e"
-                      opacity="0.9"
+                      opacity="0.95"
                     />
                     <line
                       x1="12"
-                      y1="304"
-                      x2="20"
-                      y2="304"
+                      y1="305"
+                      x2="22"
+                      y2="305"
                       stroke="#34d399"
                       strokeWidth="2"
                     />
                     <text
-                      x="24"
-                      y="308"
+                      x="26"
+                      y="309"
                       fill="#34d399"
                       fontSize="7"
                       fontFamily="system-ui"
