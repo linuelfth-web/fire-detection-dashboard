@@ -1792,68 +1792,45 @@ export const FireAlert = ({
                 {/* KITCHEN FIRE ROUTES */}
                 {isKFire && !isTemp && (
                   <g>
-                    {/* Route 1 - Back Door - blue - starts from Living Room center → Dining → Back Door */}
-                    <circle
-                      cx="261"
-                      cy="120"
-                      r="5"
-                      fill="#60a5fa"
-                      opacity="0.6"
-                    />
-                    <circle cx="261" cy="120" r="3" fill="#60a5fa" />
+                    {/* Route 1 - Back Door - blue - Living Room → Dining → Back Door */}
+                    <circle cx="261" cy="120" r="6" fill="#60a5fa" />
                     <polyline
-                      points="261,120 392,120 464,120 464,12"
+                      points="261,120 392,120 464,120 464,8"
                       fill="none"
                       stroke="#60a5fa"
-                      strokeWidth="4"
+                      strokeWidth="3"
                       strokeDasharray="8,4"
                       strokeLinecap="round"
                       className="fm-dash"
                     />
-                    <polygon points="457,14 464,4 471,14" fill="#60a5fa" />
-                    <circle
-                      cx="464"
-                      cy="5"
-                      r="6"
-                      fill="#60a5fa"
-                      opacity="0.4"
-                      stroke="#60a5fa"
-                      strokeWidth="2"
-                    />
+                    <polygon points="458,10 464,2 470,10" fill="#60a5fa" />
                     <text
-                      x="360"
+                      x="340"
                       y="112"
                       textAnchor="middle"
                       fill="#60a5fa"
-                      fontSize="9"
+                      fontSize="8"
                       fontFamily="system-ui"
                       fontWeight="900"
                     >
                       1 Back Door (SAFEST)
                     </text>
-                    {/* Route 2 - Bedroom Window - pink - starts from Bedroom center → right window */}
-                    <circle
-                      cx="473"
-                      cy="230"
-                      r="5"
-                      fill="#f472b6"
-                      opacity="0.6"
-                    />
-                    <circle cx="473" cy="230" r="3" fill="#f472b6" />
+
+                    {/* Route 2 - Bedroom Window - pink - Bedroom center → right window */}
+                    <circle cx="473" cy="240" r="5" fill="#f472b6" />
                     <polyline
-                      points="473,230 548,230"
+                      points="473,240 552,240"
                       fill="none"
                       stroke="#f472b6"
                       strokeWidth="3"
                       strokeDasharray="7,4"
                       strokeLinecap="round"
-                      opacity="0.9"
                       className="fm-dash"
                     />
-                    <polygon points="546,224 558,230 546,236" fill="#f472b6" />
+                    <polygon points="550,234 558,240 550,246" fill="#f472b6" />
                     <text
-                      x="473"
-                      y="222"
+                      x="500"
+                      y="232"
                       textAnchor="middle"
                       fill="#f472b6"
                       fontSize="8"
@@ -1862,41 +1839,31 @@ export const FireAlert = ({
                     >
                       2 Bed.Win.
                     </text>
-                    {/* Route 3 - Dining Window - amber - starts from Dining center → right window */}
-                    <circle
-                      cx="473"
-                      cy="80"
-                      r="4"
-                      fill="#fbbf24"
-                      opacity="0.6"
-                    />
-                    <circle cx="473" cy="80" r="2.5" fill="#fbbf24" />
+
+                    {/* Route 3 - Dining Window - amber - Dining center → right window */}
+                    <circle cx="473" cy="85" r="5" fill="#fbbf24" />
                     <polyline
-                      points="473,80 548,80"
+                      points="473,85 552,85"
                       fill="none"
                       stroke="#fbbf24"
-                      strokeWidth="2.5"
+                      strokeWidth="3"
                       strokeDasharray="7,4"
                       strokeLinecap="round"
-                      opacity="0.85"
                       className="fm-dash"
                     />
-                    <polygon
-                      points="546,74 558,80 546,86"
-                      fill="#fbbf24"
-                      opacity="0.85"
-                    />
+                    <polygon points="550,79 558,85 550,91" fill="#fbbf24" />
                     <text
-                      x="473"
-                      y="72"
+                      x="500"
+                      y="77"
                       textAnchor="middle"
                       fill="#fbbf24"
-                      fontSize="7"
+                      fontSize="8"
                       fontFamily="system-ui"
                       fontWeight="700"
                     >
                       3 Dining Win.
                     </text>
+
                     {/* Legend */}
                     <rect
                       x="8"
