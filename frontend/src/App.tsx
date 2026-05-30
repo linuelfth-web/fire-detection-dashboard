@@ -88,7 +88,12 @@ export default function App() {
               `💧 Humidity: ${humidity}%\n` +
               `💨 Gas: ${ppm}ppm\n` +
               `🔥 Flame: ${flameDetected ? "DETECTED" : "None"}\n\n` +
-              `⚠️ Evacuate immediately!`,
+              `━━━━━━━━━━━━━━━━━━━━\n` +
+              `🗺️ <b>ESCAPE ROUTE MAP:</b>\n` +
+              `👉 <a href="https://fire-detection-dashboard-fnjr.vercel.app">OPEN DASHBOARD NOW</a>\n` +
+              `━━━━━━━━━━━━━━━━━━━━\n\n` +
+              `⚠️ <b>EVACUATE IMMEDIATELY!</b>\n` +
+              `🚪 Follow the highlighted escape route on the dashboard!`,
           );
         }
         prevAlert.current = anyAlert;
