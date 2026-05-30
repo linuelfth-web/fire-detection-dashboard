@@ -1790,7 +1790,7 @@ export const FireAlert = ({
                 )}
 
                 {/* KITCHEN FIRE ROUTES */}
-                {isKFire && !isTemp && (
+                {isKFire && !isTemp && !isBFire && !isBoth && (
                   <g>
                     {/* Route 1 - Back Door - blue - FROM Living Room center → right to Dining → up to Back Door */}
                     <circle
@@ -1969,7 +1969,7 @@ export const FireAlert = ({
                 )}
 
                 {/* BEDROOM FIRE ROUTES */}
-                {isBFire && !isTemp && !isKFire && (
+                {isBFire && !isTemp && !isKFire && !isBoth && (
                   <g>
                     {/* Route 1 - Back Door - blue - SAFEST away from bedroom */}
                     <circle
