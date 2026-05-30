@@ -1792,17 +1792,17 @@ export const FireAlert = ({
                 {/* KITCHEN FIRE ROUTES */}
                 {isKFire && !isTemp && (
                   <g>
-                    {/* Route 1 - Back Door - blue - through bathroom door top */}
+                    {/* Route 1 - Back Door - blue - starts from Living Room center → Dining → Back Door */}
                     <circle
-                      cx="142"
-                      cy="55"
+                      cx="261"
+                      cy="120"
                       r="5"
                       fill="#60a5fa"
                       opacity="0.6"
                     />
-                    <circle cx="142" cy="55" r="3" fill="#60a5fa" />
+                    <circle cx="261" cy="120" r="3" fill="#60a5fa" />
                     <polyline
-                      points="142,55 392,55 464,55 464,12"
+                      points="261,120 392,120 464,120 464,12"
                       fill="none"
                       stroke="#60a5fa"
                       strokeWidth="4"
@@ -1821,8 +1821,8 @@ export const FireAlert = ({
                       strokeWidth="2"
                     />
                     <text
-                      x="300"
-                      y="48"
+                      x="360"
+                      y="112"
                       textAnchor="middle"
                       fill="#60a5fa"
                       fontSize="9"
@@ -1831,17 +1831,17 @@ export const FireAlert = ({
                     >
                       1 Back Door (SAFEST)
                     </text>
-                    {/* Route 2 - Bedroom Window - pink */}
+                    {/* Route 2 - Bedroom Window - pink - starts from Bedroom center → right window */}
                     <circle
-                      cx="390"
-                      cy="218"
-                      r="4"
+                      cx="473"
+                      cy="230"
+                      r="5"
                       fill="#f472b6"
                       opacity="0.6"
                     />
-                    <circle cx="390" cy="218" r="2.5" fill="#f472b6" />
+                    <circle cx="473" cy="230" r="3" fill="#f472b6" />
                     <polyline
-                      points="390,218 394,218 548,218"
+                      points="473,230 548,230"
                       fill="none"
                       stroke="#f472b6"
                       strokeWidth="3"
@@ -1850,10 +1850,10 @@ export const FireAlert = ({
                       opacity="0.9"
                       className="fm-dash"
                     />
-                    <polygon points="546,212 558,218 546,224" fill="#f472b6" />
+                    <polygon points="546,224 558,230 546,236" fill="#f472b6" />
                     <text
-                      x="460"
-                      y="210"
+                      x="473"
+                      y="222"
                       textAnchor="middle"
                       fill="#f472b6"
                       fontSize="8"
@@ -1862,17 +1862,17 @@ export const FireAlert = ({
                     >
                       2 Bed.Win.
                     </text>
-                    {/* Route 3 - Dining Window - amber */}
+                    {/* Route 3 - Dining Window - amber - starts from Dining center → right window */}
                     <circle
-                      cx="464"
+                      cx="473"
                       cy="80"
                       r="4"
                       fill="#fbbf24"
-                      opacity="0.5"
+                      opacity="0.6"
                     />
-                    <circle cx="464" cy="80" r="2.5" fill="#fbbf24" />
+                    <circle cx="473" cy="80" r="2.5" fill="#fbbf24" />
                     <polyline
-                      points="392,80 548,80"
+                      points="473,80 548,80"
                       fill="none"
                       stroke="#fbbf24"
                       strokeWidth="2.5"
@@ -1887,7 +1887,7 @@ export const FireAlert = ({
                       opacity="0.85"
                     />
                     <text
-                      x="460"
+                      x="473"
                       y="72"
                       textAnchor="middle"
                       fill="#fbbf24"
