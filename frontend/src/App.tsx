@@ -31,7 +31,7 @@ const initialState = {
 };
 
 const sendTelegramAlert = async (message: string) => {
-  const TOKEN = "8946369351:AAHO2FJctf-okZni8jxq5hXgaRAIy7dwvls";
+  const TOKEN = "8946369351:AAF0bhgnH2BvqB0bEcCZzlq2ntqUgGz1Jcc";
   const CHAT_ID = "6989652888";
   try {
     await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
@@ -98,7 +98,7 @@ export default function App() {
               `🔥 Flame: ${flameDetected ? "DETECTED" : "None"}\n\n` +
               `━━━━━━━━━━━━━━━━━━━━\n` +
               `🗺️ <b>ESCAPE ROUTE MAP:</b>\n` +
-              `👉 <a href="https://fire-detection-dashboard-fnjr.vercel.app#alert">OPEN DASHBOARD NOW</a>\n` +
+              `👉 <a href="https://fire-detection-dashboard-fnjr.vercel.app#alert-${zone.replace(" ", "")}">OPEN DASHBOARD NOW</a>\n` +
               `━━━━━━━━━━━━━━━━━━━━\n\n` +
               `⚠️ <b>EVACUATE IMMEDIATELY!</b>\n` +
               `🚪 Follow the highlighted escape route on the dashboard!`,
