@@ -5,15 +5,17 @@ import { FireAlert } from "./FireAlert";
 
 function getLevel(dht: any, mq2: any, flame: any) {
   const dhtL =
-    dht.temperature >= 70 || dht.humidity >= 95
+    dht.temperature >= 40 || dht.humidity >= 95
       ? "danger"
-      : dht.temperature >= 40 || dht.humidity >= 85
+      : dht.temperature >= 38 || dht.humidity >= 85
         ? "warning"
         : "normal";
   const mq2L =
     mq2.ppm >= 700 ? "danger" : mq2.ppm >= 400 ? "warning" : "normal";
+  const tempWarn = dht.temperature >= 40;
   const hasAlert = flame.detected || dhtL === "danger" || mq2L === "danger";
-  const hasWarn = !hasAlert && (dhtL === "warning" || mq2L === "warning");
+  const hasWarn =
+    !hasAlert && (dhtL === "warning" || mq2L === "warning" || tempWarn);
   return {
     dhtL,
     mq2L,
