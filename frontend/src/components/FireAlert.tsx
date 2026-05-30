@@ -796,6 +796,10 @@ export const FireAlert = ({
                 padding: 4,
                 background: "#080f1e",
                 marginBottom: 12,
+                marginLeft: "auto",
+                marginRight: "auto",
+                width: "100%",
+                maxWidth: "100%",
                 boxShadow: "0 0 24px " + c.glow + "66",
               }}
             >
@@ -1639,17 +1643,17 @@ export const FireAlert = ({
                       1 Back Door (SAFEST)
                     </text>
 
-                    {/* Route 2 - Dining Window - amber - from Living Room → Dining → right window */}
+                    {/* Route 2 - Bedroom Window - amber - Living Room → right → Bedroom Window */}
                     <circle
                       cx="310"
-                      cy="80"
+                      cy="150"
                       r="4"
                       fill="#fbbf24"
                       opacity="0.6"
                     />
-                    <circle cx="310" cy="80" r="2.5" fill="#fbbf24" />
+                    <circle cx="310" cy="150" r="2.5" fill="#fbbf24" />
                     <polyline
-                      points="310,80 392,80 548,80"
+                      points="310,150 392,150 473,150 473,170 548,210"
                       fill="none"
                       stroke="#fbbf24"
                       strokeWidth="3"
@@ -1658,17 +1662,17 @@ export const FireAlert = ({
                       opacity="0.9"
                       className="fm-dash"
                     />
-                    <polygon points="546,74 558,80 546,86" fill="#fbbf24" />
+                    <polygon points="546,204 558,210 546,216" fill="#fbbf24" />
                     <text
                       x="430"
-                      y="74"
+                      y="144"
                       textAnchor="middle"
                       fill="#fbbf24"
                       fontSize="8"
                       fontFamily="system-ui"
                       fontWeight="700"
                     >
-                      2 Dining Win.
+                      2 Bed.Win.
                     </text>
 
                     {/* Route 3 - Main Door - green - Living Room straight down → Hallway → Main Door */}
@@ -1763,7 +1767,7 @@ export const FireAlert = ({
                       fontSize="7"
                       fontFamily="system-ui"
                     >
-                      2 Dining Window
+                      2 Bedroom Window
                     </text>
                     <rect
                       x="8"
