@@ -834,6 +834,64 @@ export const EscapeRoute = ({
           >
             DOOR
           </text>
+          {/* Warning trace — show when elevated but no full alert */}
+          {hasWarn && !flameZone && (
+            <g>
+              <circle cx="260" cy="30" r="4" fill="#fbbf24" opacity="0.5" />
+              <circle cx="260" cy="30" r="2.5" fill="#fbbf24" />
+              <polyline
+                points="260,30 260,246 260,328"
+                fill="none"
+                stroke="#fbbf24"
+                strokeWidth="2.5"
+                strokeDasharray="7,4"
+                strokeLinecap="round"
+                opacity="0.7"
+              />
+              <polygon
+                points="252,326 260,338 268,326"
+                fill="#fbbf24"
+                opacity="0.7"
+              />
+              <text
+                x="276"
+                y="180"
+                fill="#fbbf24"
+                fontSize="8"
+                fontFamily="'Roboto',sans-serif"
+                fontWeight="700"
+                opacity="0.9"
+              >
+                ⚠ Exit via Main Door
+              </text>
+              <rect
+                x="8"
+                y="300"
+                width="130"
+                height="10"
+                rx="3"
+                fill="#080f1e"
+                opacity="0.9"
+              />
+              <line
+                x1="12"
+                y1="305"
+                x2="22"
+                y2="305"
+                stroke="#fbbf24"
+                strokeWidth="2"
+              />
+              <text
+                x="26"
+                y="309"
+                fill="#fbbf24"
+                fontSize="7"
+                fontFamily="'Roboto',sans-serif"
+              >
+                Elevated — use Main Door
+              </text>
+            </g>
+          )}
         </svg>
       </div>
     </div>
