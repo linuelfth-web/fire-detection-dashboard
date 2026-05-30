@@ -837,27 +837,27 @@ export const EscapeRoute = ({
           {/* Warning trace — show when elevated but no full alert */}
           {hasWarn && !flameZone && (
             <g>
-              <circle cx="260" cy="30" r="4" fill="#fbbf24" opacity="0.5" />
-              <circle cx="260" cy="30" r="2.5" fill="#fbbf24" />
+              <circle cx="282" cy="50" r="5" fill="#fbbf24" opacity="0.6" />
+              <circle cx="282" cy="50" r="3" fill="#fbbf24" />
               <polyline
-                points="260,30 260,246 260,328"
+                points="282,50 282,258 282,344"
                 fill="none"
                 stroke="#fbbf24"
-                strokeWidth="2.5"
-                strokeDasharray="7,4"
+                strokeWidth="3"
+                strokeDasharray="8,4"
                 strokeLinecap="round"
-                opacity="0.7"
+                opacity="0.8"
               />
               <polygon
-                points="252,326 260,338 268,326"
+                points="274,342 282,354 290,342"
                 fill="#fbbf24"
-                opacity="0.7"
+                opacity="0.8"
               />
               <text
-                x="276"
-                y="180"
+                x="298"
+                y="200"
                 fill="#fbbf24"
-                fontSize="8"
+                fontSize="9"
                 fontFamily="'Roboto',sans-serif"
                 fontWeight="700"
                 opacity="0.9"
@@ -865,25 +865,25 @@ export const EscapeRoute = ({
                 ⚠ Exit via Main Door
               </text>
               <rect
-                x="8"
-                y="300"
-                width="130"
+                x="10"
+                y="312"
+                width="136"
                 height="10"
                 rx="3"
                 fill="#080f1e"
                 opacity="0.9"
               />
               <line
-                x1="12"
-                y1="305"
-                x2="22"
-                y2="305"
+                x1="14"
+                y1="317"
+                x2="24"
+                y2="317"
                 stroke="#fbbf24"
                 strokeWidth="2"
               />
               <text
-                x="26"
-                y="309"
+                x="28"
+                y="321"
                 fill="#fbbf24"
                 fontSize="7"
                 fontFamily="'Roboto',sans-serif"
