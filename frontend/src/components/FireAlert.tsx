@@ -1599,16 +1599,91 @@ export const FireAlert = ({
                 {/* Kitchen fire routes */}
                 {isKFire && !isTemp && (
                   <g>
+                    {/* Route 1 SAFEST - Back Door - blue */}
+                    <circle
+                      cx="68"
+                      cy="55"
+                      r="5"
+                      fill="#60a5fa"
+                      opacity="0.4"
+                    />
+                    <circle cx="68" cy="55" r="3" fill="#60a5fa" />
+                    <polyline
+                      points="68,55 136,55 392,55 464,55 464,12"
+                      fill="none"
+                      stroke="#60a5fa"
+                      strokeWidth="3.5"
+                      strokeDasharray="8,4"
+                      strokeLinecap="round"
+                      className="fm-dash"
+                    />
+                    <polygon points="457,14 464,4 471,14" fill="#60a5fa" />
+                    <circle
+                      cx="464"
+                      cy="5"
+                      r="6"
+                      fill="#60a5fa"
+                      opacity="0.25"
+                      stroke="#60a5fa"
+                      strokeWidth="1.5"
+                    />
+                    <text
+                      x="240"
+                      y="48"
+                      textAnchor="middle"
+                      fill="#60a5fa"
+                      fontSize="8"
+                      fontFamily="system-ui"
+                      fontWeight="700"
+                    >
+                      1 Back Door (SAFEST)
+                    </text>
+                    {/* Route 2 - Bedroom Window - amber */}
+                    <circle
+                      cx="473"
+                      cy="210"
+                      r="4"
+                      fill="#fbbf24"
+                      opacity="0.35"
+                    />
+                    <circle cx="473" cy="210" r="2.5" fill="#fbbf24" />
+                    <polyline
+                      points="473,210 548,210"
+                      fill="none"
+                      stroke="#fbbf24"
+                      strokeWidth="2.5"
+                      strokeDasharray="7,4"
+                      strokeLinecap="round"
+                      opacity="0.85"
+                      className="fm-dash"
+                    />
+                    <polygon
+                      points="545,204 555,210 545,216"
+                      fill="#fbbf24"
+                      opacity="0.85"
+                    />
+                    <text
+                      x="473"
+                      y="202"
+                      textAnchor="middle"
+                      fill="#fbbf24"
+                      fontSize="7"
+                      fontFamily="system-ui"
+                      fontWeight="700"
+                    >
+                      2 Bed.Win.
+                    </text>
+                    {/* Route 3 - Main Door - green - from Living Room top down */}
                     <circle
                       cx="310"
-                      cy="80"
+                      cy="30"
                       r="4"
                       fill="#34d399"
                       opacity="0.35"
                     />
-                    <circle cx="310" cy="80" r="2.5" fill="#34d399" />
+                    <circle cx="310" cy="30" r="2.5" fill="#34d399" />
                     <polyline
-                      points="310,80 310,246 310,328"
+                      points="310,30 310,246 310,328"
                       fill="none"
                       stroke="#34d399"
                       strokeWidth="2.5"
@@ -1632,8 +1707,8 @@ export const FireAlert = ({
                       strokeWidth="1.5"
                     />
                     <text
-                      x="325"
-                      y="160"
+                      x="326"
+                      y="140"
                       fill="#34d399"
                       fontSize="7"
                       fontFamily="system-ui"
@@ -1641,6 +1716,7 @@ export const FireAlert = ({
                     >
                       3 Living→Main
                     </text>
+                    {/* Legend */}
                     <rect
                       x="8"
                       y="278"
@@ -1718,7 +1794,7 @@ export const FireAlert = ({
                       fontSize="7"
                       fontFamily="system-ui"
                     >
-                      3 Hallway→Main Door
+                      3 Living→Main Door
                     </text>
                   </g>
                 )}
