@@ -1600,15 +1600,15 @@ export const FireAlert = ({
                 {isKFire && !isTemp && (
                   <g>
                     <circle
-                      cx="261"
-                      cy="120"
+                      cx="310"
+                      cy="80"
                       r="4"
                       fill="#34d399"
                       opacity="0.35"
                     />
-                    <circle cx="261" cy="120" r="2.5" fill="#34d399" />
+                    <circle cx="310" cy="80" r="2.5" fill="#34d399" />
                     <polyline
-                      points="261,120 261,246 261,328"
+                      points="310,80 310,246 310,328"
                       fill="none"
                       stroke="#34d399"
                       strokeWidth="2.5"
@@ -1618,12 +1618,12 @@ export const FireAlert = ({
                       className="fm-dash"
                     />
                     <polygon
-                      points="253,326 261,338 269,326"
+                      points="302,326 310,338 318,326"
                       fill="#34d399"
                       opacity="0.8"
                     />
                     <circle
-                      cx="261"
+                      cx="310"
                       cy="334"
                       r="5"
                       fill="#34d399"
@@ -1632,8 +1632,8 @@ export const FireAlert = ({
                       strokeWidth="1.5"
                     />
                     <text
-                      x="278"
-                      y="200"
+                      x="325"
+                      y="160"
                       fill="#34d399"
                       fontSize="7"
                       fontFamily="system-ui"
