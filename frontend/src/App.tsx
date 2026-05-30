@@ -55,6 +55,11 @@ export default function App() {
   const alertLockTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [alertLocked, setAlertLocked] = useState(false);
 
+  // Clear stale hash on load so savedZone starts fresh
+  useEffect(() => {
+    window.location.hash = "";
+  }, []);
+
   useEffect(() => {
     const unsub = onValue(
       ref(db, "sensors/latest"),
@@ -84,8 +89,10 @@ export default function App() {
           const zone = flameDetected
             ? "Kitchen"
             : gasAlert
-              ? "Kitchen (Gas)"
-              : "Kitchen (Temp)";
+              ? "Kitchen(Gas)"
+              : "Kitchen(Temp)";
+          // Set hash so deep link works correctly
+          window.location.hash = "#alert-Kitchen";
           sendTelegramAlert(
             `🚨 <b>FIRE ALERT — FireGuard OS</b>\n\n` +
               `🔥 Alert in <b>${zone}</b>\n` +
@@ -95,12 +102,13 @@ export default function App() {
               `🔥 Flame: ${flameDetected ? "DETECTED" : "None"}\n\n` +
               `━━━━━━━━━━━━━━━━━━━━\n` +
               `🗺️ <b>ESCAPE ROUTE MAP:</b>\n` +
-              `👉 <a href="https://fire-detection-dashboard-fnjr.vercel.app#alert-${zone.replace(" ", "")}">OPEN DASHBOARD NOW</a>\n` +
+              `👉 <a href="https://fire-detection-dashboard-fnjr.vercel.app#alert-Kitchen">OPEN DASHBOARD NOW</a>\n` +
               `━━━━━━━━━━━━━━━━━━━━\n\n` +
               `⚠️ <b>EVACUATE IMMEDIATELY!</b>\n` +
               `🚪 Follow the highlighted escape route on the dashboard!`,
           );
         }
+        if (!anyAlert) window.location.hash = "";
         prevAlert.current = anyAlert || alertLocked;
 
         setZones((prev) => ({
