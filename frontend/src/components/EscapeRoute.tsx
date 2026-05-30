@@ -835,7 +835,7 @@ export const EscapeRoute = ({
             DOOR
           </text>
           {/* Warning trace — show when elevated but no full alert */}
-          {hasWarn && !flameZone && (
+          {(hasWarn || hasAlert) && (
             <g>
               <circle cx="282" cy="50" r="5" fill="#fbbf24" opacity="0.6" />
               <circle cx="282" cy="50" r="3" fill="#fbbf24" />
