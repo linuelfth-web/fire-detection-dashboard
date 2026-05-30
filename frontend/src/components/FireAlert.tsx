@@ -18,13 +18,20 @@ export const FireAlert = ({
   tempZone = "",
 }: Props) => {
   const [phase, setPhase] = useState<"hidden" | "alarm" | "escape">(
-    window.location.hash === "#alert" ? "escape" : "hidden",
+    window.location.hash.startsWith("#alert") ? "escape" : "hidden",
   );
   const [countdown, setCountdown] = useState(15);
   const [dismissCD, setDismissCD] = useState(10);
   const [prevAny, setPrevAny] = useState(false);
   const [fa, setFa] = useState(0);
-  const [savedZone, setSavedZone] = useState("");
+
+  const [savedZone, setSavedZone] = useState(() => {
+    const hash = window.location.hash;
+    if (hash === "#alert-Kitchen") return "Kitchen";
+    if (hash === "#alert-Bedroom") return "Bedroom";
+    if (hash === "#alert-Temp") return "Temp";
+    return "";
+  });
 
   const gasAlert = gasLevel >= 700;
   const tempAlert = temperature >= 40;
