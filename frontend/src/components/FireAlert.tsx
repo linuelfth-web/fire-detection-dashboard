@@ -1792,21 +1792,28 @@ export const FireAlert = ({
                 {/* KITCHEN FIRE ROUTES */}
                 {isKFire && !isTemp && (
                   <g>
-                    {/* Route 1 - Back Door - blue - Living Room → Dining → Back Door */}
-                    <circle cx="261" cy="120" r="6" fill="#60a5fa" />
+                    {/* Route 1 - Back Door - blue - FROM Living Room center → right to Dining → up to Back Door */}
+                    <circle
+                      cx="261"
+                      cy="130"
+                      r="6"
+                      fill="#60a5fa"
+                      opacity="0.9"
+                    />
+                    <circle cx="261" cy="130" r="3" fill="#fff" />
                     <polyline
-                      points="261,120 392,120 464,120 464,8"
+                      points="261,130 392,130 473,130 473,8"
                       fill="none"
                       stroke="#60a5fa"
-                      strokeWidth="3"
+                      strokeWidth="3.5"
                       strokeDasharray="8,4"
                       strokeLinecap="round"
                       className="fm-dash"
                     />
-                    <polygon points="458,10 464,2 470,10" fill="#60a5fa" />
+                    <polygon points="467,10 473,2 479,10" fill="#60a5fa" />
                     <text
-                      x="340"
-                      y="112"
+                      x="350"
+                      y="122"
                       textAnchor="middle"
                       fill="#60a5fa"
                       fontSize="8"
@@ -1816,10 +1823,17 @@ export const FireAlert = ({
                       1 Back Door (SAFEST)
                     </text>
 
-                    {/* Route 2 - Bedroom Window - pink - Bedroom center → right window */}
-                    <circle cx="473" cy="240" r="5" fill="#f472b6" />
+                    {/* Route 2 - Bedroom Window - pink - FROM Bedroom center → right to window */}
+                    <circle
+                      cx="473"
+                      cy="251"
+                      r="6"
+                      fill="#f472b6"
+                      opacity="0.9"
+                    />
+                    <circle cx="473" cy="251" r="3" fill="#fff" />
                     <polyline
-                      points="473,240 552,240"
+                      points="473,251 552,251"
                       fill="none"
                       stroke="#f472b6"
                       strokeWidth="3"
@@ -1827,10 +1841,10 @@ export const FireAlert = ({
                       strokeLinecap="round"
                       className="fm-dash"
                     />
-                    <polygon points="550,234 558,240 550,246" fill="#f472b6" />
+                    <polygon points="550,245 558,251 550,257" fill="#f472b6" />
                     <text
-                      x="500"
-                      y="232"
+                      x="505"
+                      y="243"
                       textAnchor="middle"
                       fill="#f472b6"
                       fontSize="8"
@@ -1840,10 +1854,17 @@ export const FireAlert = ({
                       2 Bed.Win.
                     </text>
 
-                    {/* Route 3 - Dining Window - amber - Dining center → right window */}
-                    <circle cx="473" cy="85" r="5" fill="#fbbf24" />
+                    {/* Route 3 - Dining Window - amber - FROM Dining center → right to window */}
+                    <circle
+                      cx="473"
+                      cy="80"
+                      r="6"
+                      fill="#fbbf24"
+                      opacity="0.9"
+                    />
+                    <circle cx="473" cy="80" r="3" fill="#fff" />
                     <polyline
-                      points="473,85 552,85"
+                      points="473,80 552,80"
                       fill="none"
                       stroke="#fbbf24"
                       strokeWidth="3"
@@ -1851,10 +1872,10 @@ export const FireAlert = ({
                       strokeLinecap="round"
                       className="fm-dash"
                     />
-                    <polygon points="550,79 558,85 550,91" fill="#fbbf24" />
+                    <polygon points="550,74 558,80 550,86" fill="#fbbf24" />
                     <text
-                      x="500"
-                      y="77"
+                      x="505"
+                      y="72"
                       textAnchor="middle"
                       fill="#fbbf24"
                       fontSize="8"
