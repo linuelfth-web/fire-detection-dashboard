@@ -32,7 +32,7 @@ const initialState = {
 
 const sendTelegramAlert = async (message: string) => {
   const TOKEN = "8946369351:AAF0bhgnH2BvqB0bEcCZzlq2ntqUgGz1Jcc";
-  const CHAT_ID = "6989652888";
+  const CHAT_ID = "-987654321"; // your group chat ID
   try {
     await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
       method: "POST",
