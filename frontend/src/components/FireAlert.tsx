@@ -17,7 +17,9 @@ export const FireAlert = ({
   gasZone = "",
   tempZone = "",
 }: Props) => {
-  const [phase, setPhase] = useState<"hidden" | "alarm" | "escape">("hidden");
+  const [phase, setPhase] = useState<"hidden" | "alarm" | "escape">(
+    window.location.hash === "#alert" ? "escape" : "hidden",
+  );
   const [countdown, setCountdown] = useState(15);
   const [dismissCD, setDismissCD] = useState(10);
   const [prevAny, setPrevAny] = useState(false);

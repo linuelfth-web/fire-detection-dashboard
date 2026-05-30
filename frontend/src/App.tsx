@@ -52,6 +52,8 @@ export default function App() {
   const [zones, setZones] = useState(initialState);
   const [connected, setConnected] = useState(false);
   const prevAlert = useRef(false);
+  const alertLockTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [alertLocked, setAlertLocked] = useState(false);
 
   useEffect(() => {
     const unsub = onValue(
@@ -76,6 +78,12 @@ export default function App() {
         const anyAlert = flameDetected || gasAlert || tempAlert;
 
         if (anyAlert && !prevAlert.current) {
+          setAlertLocked(true);
+          if (alertLockTimer.current) clearTimeout(alertLockTimer.current);
+          alertLockTimer.current = setTimeout(
+            () => setAlertLocked(false),
+            10000,
+          );
           const zone = flameDetected
             ? "Kitchen"
             : gasAlert
@@ -90,13 +98,13 @@ export default function App() {
               `🔥 Flame: ${flameDetected ? "DETECTED" : "None"}\n\n` +
               `━━━━━━━━━━━━━━━━━━━━\n` +
               `🗺️ <b>ESCAPE ROUTE MAP:</b>\n` +
-              `👉 <a href="https://fire-detection-dashboard-fnjr.vercel.app">OPEN DASHBOARD NOW</a>\n` +
+              `👉 <a href="https://fire-detection-dashboard-fnjr.vercel.app#alert">OPEN DASHBOARD NOW</a>\n` +
               `━━━━━━━━━━━━━━━━━━━━\n\n` +
               `⚠️ <b>EVACUATE IMMEDIATELY!</b>\n` +
               `🚪 Follow the highlighted escape route on the dashboard!`,
           );
         }
-        prevAlert.current = anyAlert;
+        prevAlert.current = anyAlert || alertLocked;
 
         setZones((prev) => ({
           kitchen: {
@@ -116,5 +124,18 @@ export default function App() {
     return () => unsub();
   }, []);
 
-  return <Dashboard zones={zones} connected={connected} />;
+  const boostedZones = alertLocked
+    ? {
+        ...zones,
+        kitchen: {
+          ...zones.kitchen,
+          flame: {
+            ...zones.kitchen.flame,
+            detected: zones.kitchen.flame.detected || alertLocked,
+          },
+        },
+      }
+    : zones;
+
+  return <Dashboard zones={boostedZones} connected={connected} />;
 }
