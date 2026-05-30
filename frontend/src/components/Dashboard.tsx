@@ -144,15 +144,7 @@ function ZonePanel({ zoneName, icon, dht11, mq2, flame }: any) {
   );
 }
 
-export const Dashboard = ({
-  zones,
-  connected,
-  simMode,
-  onSimKitchen,
-  onSimBedroom,
-  onSimBoth,
-  onSimClear,
-}: any) => {
+export const Dashboard = ({ zones, connected }: any) => {
   const [clock, setClock] = useState("");
   const [uptime, setUptime] = useState("00:00:00");
   const [start] = useState(Date.now());
@@ -400,100 +392,6 @@ export const Dashboard = ({
           >
             <span>Firmware v2.1.4 · MQTT/JSON · 2s</span>
             <span>© FireGuard Systems</span>
-          </div>
-          {/* Simulation buttons */}
-          <div
-            style={{
-              paddingTop: 8,
-              borderTop: "1px solid #1e3a52",
-              display: "flex",
-              gap: 6,
-              flexWrap: "wrap" as const,
-            }}
-          >
-            <div
-              style={{
-                fontSize: 10,
-                color: "#6b7280",
-                width: "100%",
-                marginBottom: 4,
-                fontWeight: 700,
-                letterSpacing: 1,
-              }}
-            >
-              🧪 SIMULATION
-            </div>
-            <button
-              onClick={onSimKitchen}
-              style={{
-                flex: 1,
-                padding: "6px 4px",
-                fontSize: 10,
-                fontWeight: 700,
-                background: simMode === "kitchen" ? "#7f1d1d" : "#1e3a52",
-                color: simMode === "kitchen" ? "#fca5a5" : "#94a3b8",
-                border:
-                  "1px solid " +
-                  (simMode === "kitchen" ? "#ef4444" : "#1e3a52"),
-                borderRadius: 6,
-                cursor: "pointer",
-              }}
-            >
-              🍳 Kitchen Fire
-            </button>
-            <button
-              onClick={onSimBedroom}
-              style={{
-                flex: 1,
-                padding: "6px 4px",
-                fontSize: 10,
-                fontWeight: 700,
-                background: simMode === "bedroom" ? "#7f1d1d" : "#1e3a52",
-                color: simMode === "bedroom" ? "#fca5a5" : "#94a3b8",
-                border:
-                  "1px solid " +
-                  (simMode === "bedroom" ? "#ef4444" : "#1e3a52"),
-                borderRadius: 6,
-                cursor: "pointer",
-              }}
-            >
-              🛏️ Bedroom Fire
-            </button>
-            <button
-              onClick={onSimBoth}
-              style={{
-                flex: 1,
-                padding: "6px 4px",
-                fontSize: 10,
-                fontWeight: 700,
-                background: simMode === "both" ? "#7f1d1d" : "#1e3a52",
-                color: simMode === "both" ? "#fca5a5" : "#94a3b8",
-                border:
-                  "1px solid " + (simMode === "both" ? "#ef4444" : "#1e3a52"),
-                borderRadius: 6,
-                cursor: "pointer",
-              }}
-            >
-              🔥 Both Zones
-            </button>
-            {simMode && (
-              <button
-                onClick={onSimClear}
-                style={{
-                  flex: 1,
-                  padding: "6px 4px",
-                  fontSize: 10,
-                  fontWeight: 700,
-                  background: "#064e3b",
-                  color: "#34d399",
-                  border: "1px solid #059669",
-                  borderRadius: 6,
-                  cursor: "pointer",
-                }}
-              >
-                ✅ Clear Sim
-              </button>
-            )}
           </div>
         </div>
       </div>
