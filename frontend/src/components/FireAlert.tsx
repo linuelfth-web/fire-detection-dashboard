@@ -1969,7 +1969,7 @@ export const FireAlert = ({
                 )}
 
                 {/* BEDROOM FIRE ROUTES */}
-                {isBFire && !isTemp && (
+                {isBFire && !isTemp && !isKFire && (
                   <g>
                     {/* Route 1 - Back Door - blue - SAFEST away from bedroom */}
                     <circle
