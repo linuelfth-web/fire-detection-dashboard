@@ -1652,17 +1652,17 @@ export const FireAlert = ({
                       1 Back Door (SAFEST)
                     </text>
 
-                    {/* Route 2 - Bedroom Window - amber - Living Room → right → Bedroom Window */}
+                    {/* Route 2 - Bedroom Window - amber - Living Room → right side → Bedroom Window */}
                     <circle
-                      cx="310"
-                      cy="150"
+                      cx="390"
+                      cy="180"
                       r="4"
                       fill="#fbbf24"
                       opacity="0.6"
                     />
-                    <circle cx="310" cy="150" r="2.5" fill="#fbbf24" />
+                    <circle cx="390" cy="180" r="2.5" fill="#fbbf24" />
                     <polyline
-                      points="310,150 392,150 473,150 473,170 548,210"
+                      points="390,180 394,180 394,218 548,218"
                       fill="none"
                       stroke="#fbbf24"
                       strokeWidth="3"
@@ -1671,10 +1671,10 @@ export const FireAlert = ({
                       opacity="0.9"
                       className="fm-dash"
                     />
-                    <polygon points="546,204 558,210 546,216" fill="#fbbf24" />
+                    <polygon points="546,212 558,218 546,224" fill="#fbbf24" />
                     <text
-                      x="430"
-                      y="144"
+                      x="460"
+                      y="174"
                       textAnchor="middle"
                       fill="#fbbf24"
                       fontSize="8"
