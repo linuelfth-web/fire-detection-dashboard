@@ -7,7 +7,7 @@ function getLevel(dht: any, mq2: any, flame: any) {
   const dhtL =
     dht.temperature >= 70 || dht.humidity >= 95
       ? "danger"
-      : dht.temperature >= 50 || dht.humidity >= 85
+      : dht.temperature >= 40 || dht.humidity >= 85
         ? "warning"
         : "normal";
   const mq2L =
@@ -173,15 +173,20 @@ export const Dashboard = ({ zones, connected }: any) => {
   const bBg = gAlert ? "#3b0000" : gWarn ? "#451a03" : "#0f2318";
   const bBorder = gAlert ? "#dc2626" : gWarn ? "#d97706" : "#059669";
   const bColor = gAlert ? "#f87171" : gWarn ? "#fbbf24" : "#34d399";
+  const highTemp = Math.max(k.dht11.temperature, b.dht11.temperature) >= 40;
   const bText = gAlert
     ? "Fire Alert — Evacuate Immediately"
     : gWarn
-      ? "Elevated Readings — Stand By"
+      ? highTemp
+        ? "Critical Temperature Detected — Stand By"
+        : "Elevated Readings — Stand By"
       : "All Zones Secure";
   const bSub = gAlert
     ? "Critical threshold breached"
     : gWarn
-      ? "One or more sensors above threshold"
+      ? highTemp
+        ? `Temperature at ${Math.max(k.dht11.temperature, b.dht11.temperature)}°C — monitor closely`
+        : "One or more sensors above threshold"
       : "All sensors nominal across all zones";
 
   const flameDetected = k.flame.detected || b.flame.detected;
